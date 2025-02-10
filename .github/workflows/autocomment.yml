@@ -1,0 +1,24 @@
+name: Auto Comment
+
+on:
+  schedule:
+    - cron: '0 9 * * *' # Este cron ejecutará el workflow todos los días a las 9:00 AM (hora UTC)
+  workflow_dispatch: # Permite disparar el workflow manualmente
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Crear un comentario en el repositorio
+        uses: peter-evans/create-issue-comment@v2
+        with:
+          issue-number: 1 # Número del issue donde se publicará el comentario
+          body: |
+            ¡Este es un comentario automático generado por GitHub Actions! 😊
+            Este comentario se publica todos los días a una hora programada.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
